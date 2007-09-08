@@ -46,6 +46,7 @@ public class CAccountSchemaFile {
              "Cash Flow_Name"
     };
     
+    private final static int MIN_NCOLS = 9;  // just first 9 columns are needed
     private final static int NCOLS = m_cols.length;
     
     private File    m_file;
@@ -289,23 +290,32 @@ public class CAccountSchemaFile {
         // Split the line
         Pattern pattern = Pattern.compile("\\]{0,1},\\[{0,1}", Pattern.CASE_INSENSITIVE);
         String[] colNames = pattern.split(line);
-        if (colNames.length==NCOLS) {
+        if (colNames.length>=MIN_NCOLS) {
             m_separator = ',';
         } else {
             // Check semi colon
             pattern = Pattern.compile("\\]{0,1};\\[{0,1}", Pattern.CASE_INSENSITIVE);
             colNames = pattern.split(line);
-            if (colNames.length==NCOLS) {
+            if (colNames.length>=MIN_NCOLS) {
                 m_separator = ';';
             }
         }
-        // Remove square brackets (if any) in the beginning and end
-        if (colNames.length==NCOLS) {
-            if (colNames[0].startsWith("[")) {
-                colNames[0] = colNames[0].substring(1);
-            }
-            if (colNames[NCOLS-1].endsWith("]")) {
-                colNames[NCOLS-1] = colNames[NCOLS-1].substring(0,  colNames[NCOLS-1].length()-1);
+        int numLoadedCols = colNames.length;
+        // Remove quotes and square brackets (if any) in the beginning and end
+        if (colNames.length>=MIN_NCOLS) {
+            for (int i=0; i<numLoadedCols; i++) {
+                if (colNames[i].startsWith("\"")) {
+                    colNames[i] = colNames[i].substring(1);
+                }
+                if (colNames[i].endsWith("\"")) {
+                    colNames[i] = colNames[i].substring(0,  colNames[i].length()-1);
+                }
+                if (colNames[i].startsWith("[")) {
+                    colNames[i] = colNames[i].substring(1);
+                }
+                if (colNames[i].endsWith("]")) {
+                    colNames[i] = colNames[i].substring(0,  colNames[i].length()-1);
+                }
             }
         }
         if (colNames.length<=1) {
@@ -313,13 +323,13 @@ public class CAccountSchemaFile {
         }
         
         // Go through each column to make sure they are in order
-        for (int i=0; i<NCOLS; i++) {
+        for (int i=0; i<numLoadedCols; i++) {
             if (!m_cols[i].equals(colNames[i])) {
                 throw new Exception("Expected column [" + m_cols[i] + "]. Found [" + colNames[i] + "].");
             }
         }
         
-        return(colNames.length==NCOLS);
+        return(colNames.length>=MIN_NCOLS);
     }
     
 }
