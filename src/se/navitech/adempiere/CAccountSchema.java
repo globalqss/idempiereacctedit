@@ -175,6 +175,31 @@ public class CAccountSchema {
     }
     
     /**
+     * Sets the type of the account elements recursively
+     *
+     * @param   elementKey
+     * @param   type
+     */
+    public void setTypeRecursive(String elementKey, String type) {
+        SortedSet<String> children = m_tree.get(elementKey);
+        setTypeRecursive(children, type);
+    }
+    
+    
+    private void setTypeRecursive(SortedSet<String> children, String type) {
+        String accountKey;
+        if (children==null) return;
+        for (Iterator<String> it = children.iterator(); it.hasNext();) {
+            accountKey = it.next();
+            SortedSet<String> grandChildren = m_tree.get(accountKey);
+            if (grandChildren!=null && grandChildren.size()>0) {
+                setTypeRecursive(grandChildren, type);
+            }
+            m_elements.get(accountKey).setType(type);
+        }
+    }
+    
+    /**
      * Removes all account leaves that is not tied to a default account
      */
     public void makeMinimal() {
