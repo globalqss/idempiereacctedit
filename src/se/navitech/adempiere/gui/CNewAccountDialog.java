@@ -21,6 +21,8 @@ public class CNewAccountDialog extends javax.swing.JDialog {
         super(parent, true);
         initComponents();
         parentAcctText.setText(parentAccountId);
+        accountIdText.setText(parentAccountId);
+        accountIdText.requestFocus();
         getRootPane().setDefaultButton(createButton);
     }
     
@@ -159,6 +161,10 @@ public class CNewAccountDialog extends javax.swing.JDialog {
         if (getAccountName().length()==0) {
             JOptionPane.showMessageDialog(null, "Account name can't be empty.");
             accountText.requestFocus();
+            return;
+        }
+        if (getAccountId()!=null && getAccountId().equals(getParentAccountId())) {
+            JOptionPane.showMessageDialog(null, "Account id can't be the same as parent account id.");
             return;
         }
         
