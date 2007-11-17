@@ -319,6 +319,9 @@ is divided into following sections:
         <copy todir="${build.classes.dir}">
             <fileset dir="${src.dir}" excludes="${build.classes.excludes},${excludes}" includes="${includes}"/>
         </copy>
+    	<unjar dest="${build.classes.dir}">
+    		<fileset dir="lib" />    			
+    	</unjar>
     </target>
     <target name="-post-compile">
         <!-- Empty placeholder for easier customization. -->
@@ -378,7 +381,7 @@ is divided into following sections:
         <pathconvert property="run.classpath.without.build.classes.dir">
             <path path="${run.classpath}"/>
             <map from="${build.classes.dir.resolved}" to=""/>
-        </pathconvert>
+        </pathconvert>    	
         <pathconvert pathsep=" " property="jar.classpath">
             <path path="${run.classpath.without.build.classes.dir}"/>
             <chainedmapper>
