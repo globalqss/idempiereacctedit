@@ -212,7 +212,10 @@ public class CAccountSchemaFile {
      */
     private boolean readFile() throws Exception {
         // Open the file for reading
-        BufferedReader in = new BufferedReader(new FileReader(m_file));
+		String inputCharEncoding = "UTF-8"; //"CP1251"; //"ISO8859-1";
+		// Input file
+		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream( m_file ), inputCharEncoding));
+		
         String line;
         String firstLine = null;
         boolean result = false;
