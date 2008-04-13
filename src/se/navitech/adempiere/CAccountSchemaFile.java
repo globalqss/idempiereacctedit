@@ -86,7 +86,9 @@ public class CAccountSchemaFile {
      */
     public void saveFile(File file) throws Exception {
         // Open the file for writing
-        BufferedWriter out = new BufferedWriter(new FileWriter(file));
+		String outputCharEncoding = "UTF-8";
+		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), outputCharEncoding));
+		
         // Make sure we have comma as a separator char
         m_separator = ',';
         // Create the first line
