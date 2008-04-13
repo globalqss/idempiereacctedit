@@ -9,7 +9,6 @@
 
 package se.navitech.adempiere;
 
-import java.util.*;
 
 /**
  *
