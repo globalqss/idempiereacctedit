@@ -14,7 +14,7 @@ package se.navitech.adempiere;
  *
  * @author Daniel Norin
  */
-public class CAccountElement implements Comparable {
+public class CAccountElement implements Comparable<Object> {
     
     /** Creates a new instance of CAccountElement */
     public CAccountElement() {

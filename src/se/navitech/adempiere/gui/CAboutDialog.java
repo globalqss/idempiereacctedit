@@ -6,13 +6,28 @@
 
 package se.navitech.adempiere.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+
 /**
  *
  * @author  daniel
  */
-public class CAboutDialog extends javax.swing.JDialog {
-    
-    /** Creates new form CAboutDialog */
+public class CAboutDialog extends JDialog {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1060559348437255480L;
+
+	/** Creates new form CAboutDialog */
     public CAboutDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -27,20 +42,20 @@ public class CAboutDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        backPanel = new javax.swing.JPanel();
-        mainPanel = new javax.swing.JPanel();
-        imagePanel = new javax.swing.JPanel();
-        imageLabel = new javax.swing.JLabel();
-        textPanel = new javax.swing.JPanel();
-        closeButton = new javax.swing.JButton();
-        moreTextPanel = new javax.swing.JPanel();
-        row1Label = new javax.swing.JLabel();
-        row2Label = new javax.swing.JLabel();
-        row3Label = new javax.swing.JLabel();
-        row4Label = new javax.swing.JLabel();
-        row5Label = new javax.swing.JLabel();
+        backPanel = new JPanel();
+        mainPanel = new JPanel();
+        imagePanel = new JPanel();
+        imageLabel = new JLabel();
+        textPanel = new JPanel();
+        closeButton = new JButton();
+        moreTextPanel = new JPanel();
+        row1Label = new JLabel();
+        row2Label = new JLabel();
+        row3Label = new JLabel();
+        row4Label = new JLabel();
+        row5Label = new JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLocationByPlatform(true);
         setUndecorated(true);
 
@@ -51,7 +66,7 @@ public class CAboutDialog extends javax.swing.JDialog {
 
         imagePanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        imageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/se/navitech/adempiere/icons/navitech_logo.jpg"))); // NOI18N
+        imageLabel.setIcon(new ImageIcon(getClass().getResource("/se/navitech/adempiere/icons/navitech_logo.jpg"))); // NOI18N
         imagePanel.add(imageLabel);
 
         mainPanel.add(imagePanel);
@@ -59,8 +74,8 @@ public class CAboutDialog extends javax.swing.JDialog {
         textPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         closeButton.setText("Close");
-        closeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 closeButtonActionPerformed(evt);
             }
         });
@@ -68,24 +83,24 @@ public class CAboutDialog extends javax.swing.JDialog {
         moreTextPanel.setBackground(new java.awt.Color(255, 255, 255));
         moreTextPanel.setLayout(new java.awt.GridLayout(5, 1, 0, 8));
 
-        row1Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        row1Label.setHorizontalAlignment(SwingConstants.CENTER);
         row1Label.setText("proudly presents");
         moreTextPanel.add(row1Label);
 
         row2Label.setFont(new java.awt.Font("Tahoma", 1, 11));
-        row2Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        row2Label.setHorizontalAlignment(SwingConstants.CENTER);
         row2Label.setText("The Adempiere Account Editor");
         moreTextPanel.add(row2Label);
 
-        row3Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        row3Label.setHorizontalAlignment(SwingConstants.CENTER);
         row3Label.setText("Author: Daniel Tamm");
         moreTextPanel.add(row3Label);
 
-        row4Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        row4Label.setHorizontalAlignment(SwingConstants.CENTER);
         row4Label.setText("http://www.navitech.se/sv/adempiere");
         moreTextPanel.add(row4Label);
 
-        row5Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        row5Label.setHorizontalAlignment(SwingConstants.CENTER);
         row5Label.setText("Version 1.2");
         moreTextPanel.add(row5Label);
 
@@ -127,24 +142,24 @@ public class CAboutDialog extends javax.swing.JDialog {
         setBounds((screenSize.width-369)/2, (screenSize.height-370)/2, 369, 370);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+    private void closeButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         setVisible(false);
         dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel backPanel;
-    private javax.swing.JButton closeButton;
-    private javax.swing.JLabel imageLabel;
-    private javax.swing.JPanel imagePanel;
-    private javax.swing.JPanel mainPanel;
-    private javax.swing.JPanel moreTextPanel;
-    private javax.swing.JLabel row1Label;
-    private javax.swing.JLabel row2Label;
-    private javax.swing.JLabel row3Label;
-    private javax.swing.JLabel row4Label;
-    private javax.swing.JLabel row5Label;
-    private javax.swing.JPanel textPanel;
+    private JPanel backPanel;
+    private JButton closeButton;
+    private JLabel imageLabel;
+    private JPanel imagePanel;
+    private JPanel mainPanel;
+    private JPanel moreTextPanel;
+    private JLabel row1Label;
+    private JLabel row2Label;
+    private JLabel row3Label;
+    private JLabel row4Label;
+    private JLabel row5Label;
+    private JPanel textPanel;
     // End of variables declaration//GEN-END:variables
     
 }

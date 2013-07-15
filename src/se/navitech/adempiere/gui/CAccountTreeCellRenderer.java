@@ -9,23 +9,33 @@
 
 package se.navitech.adempiere.gui;
 
-import org.omg.SendingContext.RunTime;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Toolkit;
+
+import javax.swing.ImageIcon;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
+
 import se.navitech.adempiere.CAccountElement;
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.tree.*;
 
 /**
  *
  * @author Daniel Norin
  */
 public class CAccountTreeCellRenderer extends DefaultTreeCellRenderer {
-    
-    ImageIcon m_accountGroupIcon;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2714424722193416943L;
+
+	ImageIcon m_accountGroupIcon;
     ImageIcon m_accountIcon;
     DefaultMutableTreeNode node;
 
-    private static Font italic = new Font("Dialog", Font.ITALIC, 12);
     private static Font normal = new Font("Dialog", Font.PLAIN, 12);
     
     /** Creates a new instance of CAccountTreeCellRenderer */

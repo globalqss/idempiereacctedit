@@ -6,28 +6,73 @@
 
 package se.navitech.adempiere.gui;
 
-import javax.swing.event.*;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.util.Iterator;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.Vector;
+
+import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.JToolBar;
+import javax.swing.JTree;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.table.TableColumnModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+
 import se.navitech.adempiere.CAccountElement;
 import se.navitech.adempiere.CAccountSchema;
 import se.navitech.adempiere.CAccountSchemaFile;
 import se.navitech.adempiere.CAccountType;
 import se.navitech.adempiere.CDefaultAccount;
-import java.io.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.tree.*;
-import javax.swing.table.*;
-import java.util.*;
 
 /**
  * Class representing a visual display of an account schema file.
  *
  * @author  Daniel Norin
  */
-public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements KeyListener, ChangeListener, FocusListener {
-    
-    private CAccountSchemaFile  m_schemaFile;
+public class CSchemaFileMainFrame extends JInternalFrame implements KeyListener, ChangeListener, FocusListener {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2564622025595517708L;
+
+	private CAccountSchemaFile  m_schemaFile;
     private File                m_file;
     private CAccountElement     m_currentAccount;
     private CSchemaFileMainFrame    m_thisFrame;
@@ -37,8 +82,8 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
     private Vector<CDefaultAccount>              m_defaultAccountVector;
     private CDefAcctTableModel                   m_defAcctTableModel;
     
-    private javax.swing.JPopupMenu  m_accountMenu;
-    private javax.swing.JPopupMenu  m_accountGroupMenu;
+    private JPopupMenu  m_accountMenu;
+    private JPopupMenu  m_accountGroupMenu;
     
     private boolean         m_updateProgress = true;
     
@@ -49,7 +94,12 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
      * Action that deletes an account element from the schema
      */
     class ActionDelete extends AbstractAction {
-        public ActionDelete(String text, ImageIcon icon,
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -3223558978379631794L;
+
+		public ActionDelete(String text, ImageIcon icon,
                 String desc, Integer mnemonic) {
             super(text, icon);
             putValue(SHORT_DESCRIPTION, desc);
@@ -70,7 +120,6 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
                 
                 // Find what node is selected
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode)accountTree.getLastSelectedPathComponent();
-                DefaultMutableTreeNode nextNode = node.getNextNode();
                 DefaultTreeModel model = (DefaultTreeModel)accountTree.getModel();
                 int selRow = accountTree.getLeadSelectionRow();
                 model.removeNodeFromParent(node);
@@ -98,7 +147,12 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
      * Account that adds an account
      */
     class ActionAdd extends AbstractAction {
-        public ActionAdd(String text, ImageIcon icon,
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -4175693438181329279L;
+
+		public ActionAdd(String text, ImageIcon icon,
                 String desc, Integer mnemonic) {
             super(text,icon);
             putValue(SHORT_DESCRIPTION, desc);
@@ -114,7 +168,12 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
      * Action that saves the current schema file
      */
     class ActionSave extends AbstractAction {
-        public ActionSave(String text, ImageIcon icon,
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -7747184278900076388L;
+
+		public ActionSave(String text, ImageIcon icon,
                 String desc, Integer mnemonic) {
             super(text, icon);
             putValue(SHORT_DESCRIPTION, desc);
@@ -193,11 +252,7 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
         tableColModel.getColumn(0).setPreferredWidth(150);
         tableColModel.getColumn(1).setPreferredWidth(150);
         tableColModel.getColumn(2).setPreferredWidth(75);
-        
-        CAccountElement elem;
-        CAccountSchema schema = m_schemaFile.getSchema();
-        String defaultAccount;
-        
+
         // Add key listeners
         acctNameText.addKeyListener(this);
         acctDescText.addKeyListener(this);
@@ -215,8 +270,8 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
         m_accountGroupMenu.add(new JMenuItem(actionAdd));
         
         // Add mouselisteners to account tree for the popup menus.
-        accountTree.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
+        accountTree.addMouseListener(new MouseAdapter() {
+            public void mouseReleased(MouseEvent evt) {
                 if (evt.isPopupTrigger()) {
                     maybePopUpMenu(evt);
                 }
@@ -230,7 +285,7 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
      * Called from the mouse listener attached to the account tree.
      * Finds out which node is closest and displays relevant popup menu.
      */
-    private void maybePopUpMenu(java.awt.event.MouseEvent evt) {
+    private void maybePopUpMenu(MouseEvent evt) {
         // Select the tree node closest to the mouse
         TreePath path = accountTree.getClosestPathForLocation(evt.getX(), evt.getY());
         if (path!=null) {
@@ -292,7 +347,6 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
             schema.addAccountElement(acct);
             DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(acct);
             // Update tree
-            boolean added = false;
             DefaultMutableTreeNode nextNode;
             DefaultTreeModel treeModel = (DefaultTreeModel)accountTree.getModel();
             int addIndex = node.getChildCount();
@@ -493,75 +547,75 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        mainToolBar = new javax.swing.JToolBar();
-        saveButton = new javax.swing.JButton();
-        mainPanel = new javax.swing.JPanel();
-        mainSplitPanePanel = new javax.swing.JSplitPane();
-        leftSplitPanePanel = new javax.swing.JPanel();
-        accountTreeScrollPane = new javax.swing.JScrollPane();
+        mainToolBar = new JToolBar();
+        saveButton = new JButton();
+        mainPanel = new JPanel();
+        mainSplitPanePanel = new JSplitPane();
+        leftSplitPanePanel = new JPanel();
+        accountTreeScrollPane = new JScrollPane();
         accountTree = new JTree(m_treeRoot);
-        accountTreeBottomPanel = new javax.swing.JPanel();
-        newAccountButton = new javax.swing.JButton();
-        removeAccountButton = new javax.swing.JButton();
-        rightSplitPanePanel = new javax.swing.JPanel();
-        tabbedPanePanel = new javax.swing.JTabbedPane();
-        tabbedPaneMainPanel = new javax.swing.JPanel();
-        detailsPanel = new javax.swing.JPanel();
-        docCtlCheck = new javax.swing.JCheckBox();
-        summaryAcctLabel = new javax.swing.JLabel();
-        summaryAcctCheck = new javax.swing.JCheckBox();
-        defaultAccountLabel = new javax.swing.JLabel();
+        accountTreeBottomPanel = new JPanel();
+        newAccountButton = new JButton();
+        removeAccountButton = new JButton();
+        rightSplitPanePanel = new JPanel();
+        tabbedPanePanel = new JTabbedPane();
+        tabbedPaneMainPanel = new JPanel();
+        detailsPanel = new JPanel();
+        docCtlCheck = new JCheckBox();
+        summaryAcctLabel = new JLabel();
+        summaryAcctCheck = new JCheckBox();
+        defaultAccountLabel = new JLabel();
         defaultAcctCombo = new JComboBox(m_defaultAccountVector);
-        acctParentLabel = new javax.swing.JLabel();
-        balanceSheetLabel = new javax.swing.JLabel();
-        balanceSheetText = new javax.swing.JTextField();
-        balanceSheetNameLabel = new javax.swing.JLabel();
-        balanceSheetNameText = new javax.swing.JTextField();
-        us1120balanceSheetLabel = new javax.swing.JLabel();
-        us1120balanceSheetText = new javax.swing.JTextField();
-        us1120balanceSheetNameLabel = new javax.swing.JLabel();
-        us1120balanceSheetNameText = new javax.swing.JTextField();
-        pnlLabel = new javax.swing.JLabel();
-        pnlText = new javax.swing.JTextField();
-        pnlNameLabel = new javax.swing.JLabel();
-        pnlNameText = new javax.swing.JTextField();
-        us1120incomeStmtLabel = new javax.swing.JLabel();
-        us1120incomeStmtText = new javax.swing.JTextField();
-        us1120incomeStmtNameLabel = new javax.swing.JLabel();
-        us1120incomeStmtNameText = new javax.swing.JTextField();
-        cashFlowLabel = new javax.swing.JLabel();
-        cashFlowText = new javax.swing.JTextField();
-        cashFlowNameLabel = new javax.swing.JLabel();
-        cashFlowNameText = new javax.swing.JTextField();
-        acctParentText = new javax.swing.JTextField();
-        docCtlLabel = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        acctValueLabel = new javax.swing.JLabel();
-        acctNameLabel = new javax.swing.JLabel();
-        acctNameText = new javax.swing.JTextField();
-        acctValueText = new javax.swing.JTextField();
-        acctDescLabel = new javax.swing.JLabel();
-        acctDescText = new javax.swing.JTextField();
-        acctTypeLabel = new javax.swing.JLabel();
+        acctParentLabel = new JLabel();
+        balanceSheetLabel = new JLabel();
+        balanceSheetText = new JTextField();
+        balanceSheetNameLabel = new JLabel();
+        balanceSheetNameText = new JTextField();
+        us1120balanceSheetLabel = new JLabel();
+        us1120balanceSheetText = new JTextField();
+        us1120balanceSheetNameLabel = new JLabel();
+        us1120balanceSheetNameText = new JTextField();
+        pnlLabel = new JLabel();
+        pnlText = new JTextField();
+        pnlNameLabel = new JLabel();
+        pnlNameText = new JTextField();
+        us1120incomeStmtLabel = new JLabel();
+        us1120incomeStmtText = new JTextField();
+        us1120incomeStmtNameLabel = new JLabel();
+        us1120incomeStmtNameText = new JTextField();
+        cashFlowLabel = new JLabel();
+        cashFlowText = new JTextField();
+        cashFlowNameLabel = new JLabel();
+        cashFlowNameText = new JTextField();
+        acctParentText = new JTextField();
+        docCtlLabel = new JLabel();
+        jPanel2 = new JPanel();
+        acctValueLabel = new JLabel();
+        acctNameLabel = new JLabel();
+        acctNameText = new JTextField();
+        acctValueText = new JTextField();
+        acctDescLabel = new JLabel();
+        acctDescText = new JTextField();
+        acctTypeLabel = new JLabel();
         acctTypeCombo = new JComboBox(CAccountType.m_accountTypes);
-        acctSignLabel = new javax.swing.JLabel();
-        acctSignCombo = new javax.swing.JComboBox();
-        accountListPanel = new javax.swing.JPanel();
-        accountListBgPanel = new javax.swing.JPanel();
-        accountListScrollPane = new javax.swing.JScrollPane();
-        accountListTable = new javax.swing.JTable();
-        defAcctPanel = new javax.swing.JPanel();
-        defAcctBasePanel = new javax.swing.JPanel();
-        defAcctScrollPane = new javax.swing.JScrollPane();
-        defAcctTable = new javax.swing.JTable();
-        mainMenuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        saveMenuItem = new javax.swing.JMenuItem();
-        saveAsMenuItem = new javax.swing.JMenuItem();
-        fileSeparator = new javax.swing.JSeparator();
-        closeMenuItem = new javax.swing.JMenuItem();
-        actionMenu = new javax.swing.JMenu();
-        purgeMenuItem = new javax.swing.JMenuItem();
+        acctSignLabel = new JLabel();
+        acctSignCombo = new JComboBox();
+        accountListPanel = new JPanel();
+        accountListBgPanel = new JPanel();
+        accountListScrollPane = new JScrollPane();
+        accountListTable = new JTable();
+        defAcctPanel = new JPanel();
+        defAcctBasePanel = new JPanel();
+        defAcctScrollPane = new JScrollPane();
+        defAcctTable = new JTable();
+        mainMenuBar = new JMenuBar();
+        fileMenu = new JMenu();
+        saveMenuItem = new JMenuItem();
+        saveAsMenuItem = new JMenuItem();
+        fileSeparator = new JSeparator();
+        closeMenuItem = new JMenuItem();
+        actionMenu = new JMenu();
+        purgeMenuItem = new JMenuItem();
 
         setClosable(true);
         setIconifiable(true);
@@ -569,7 +623,7 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
         setResizable(true);
 
         saveButton.setAction(actionSave);
-        saveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/se/navitech/adempiere/icons/save-16.png"))); // NOI18N
+        saveButton.setIcon(new ImageIcon(getClass().getResource("/se/navitech/adempiere/icons/save-16.png"))); // NOI18N
         saveButton.setText("Save");
         saveButton.setToolTipText("Save the file");
         mainToolBar.add(saveButton);
@@ -586,13 +640,13 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
 
         accountTree.setCellRenderer(new CAccountTreeCellRenderer());
         accountTree.setRowHeight(24);
-        accountTree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
-            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+        accountTree.addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent evt) {
                 accountTreeValueChanged(evt);
             }
         });
-        accountTree.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        accountTree.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
                 tableKeyPressed(evt);
             }
         });
@@ -601,13 +655,13 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
         leftSplitPanePanel.add(accountTreeScrollPane, java.awt.BorderLayout.CENTER);
 
         newAccountButton.setAction(actionAdd);
-        newAccountButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/se/navitech/adempiere/icons/new.png"))); // NOI18N
+        newAccountButton.setIcon(new ImageIcon(getClass().getResource("/se/navitech/adempiere/icons/new.png"))); // NOI18N
         newAccountButton.setMnemonic('n');
         newAccountButton.setText("New account");
         newAccountButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
 
         removeAccountButton.setAction(actionDelete);
-        removeAccountButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/se/navitech/adempiere/icons/remove.png"))); // NOI18N
+        removeAccountButton.setIcon(new ImageIcon(getClass().getResource("/se/navitech/adempiere/icons/remove.png"))); // NOI18N
         removeAccountButton.setText("Remove account");
         removeAccountButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
 
@@ -646,8 +700,8 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
 
         defaultAccountLabel.setText("Default account");
 
-        defaultAcctCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        defaultAcctCombo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 defaultAcctComboActionPerformed(evt);
             }
         });
@@ -826,15 +880,15 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
 
         acctTypeLabel.setText("Account type");
 
-        acctTypeCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        acctTypeCombo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 acctTypeComboActionPerformed(evt);
             }
         });
 
         acctSignLabel.setText("Account sign");
 
-        acctSignCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "Natural", "Debit", "Credit" }));
+        acctSignCombo.setModel(new DefaultComboBoxModel(new String[] { "", "Natural", "Debit", "Credit" }));
 
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -905,7 +959,7 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
 
         tabbedPanePanel.addTab("List of accounts", accountListPanel);
 
-        defAcctBasePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Assigned default accounts"));
+        defAcctBasePanel.setBorder(BorderFactory.createTitledBorder("Assigned default accounts"));
 
         defAcctTable.setModel(m_defAcctTableModel);
         defAcctScrollPane.setViewportView(defAcctTable);
@@ -955,8 +1009,8 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
 
         saveAsMenuItem.setText("Save as ...");
         saveAsMenuItem.setToolTipText("Saves file with a different name");
-        saveAsMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        saveAsMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 saveAsMenuItemActionPerformed(evt);
             }
         });
@@ -966,8 +1020,8 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
         closeMenuItem.setMnemonic('C');
         closeMenuItem.setText("Close");
         closeMenuItem.setToolTipText("Close this file.");
-        closeMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        closeMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 closeMenuItemActionPerformed(evt);
             }
         });
@@ -978,8 +1032,8 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
         actionMenu.setText("Actions");
 
         purgeMenuItem.setText("Purge accounts...");
-        purgeMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        purgeMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 purgeMenuItemActionPerformed(evt);
             }
         });
@@ -996,7 +1050,7 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
     /**
      *  Method called when the default account combo box value is changed.
      */    
-    private void defaultAcctComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_defaultAcctComboActionPerformed
+    private void defaultAcctComboActionPerformed(ActionEvent evt) {//GEN-FIRST:event_defaultAcctComboActionPerformed
 
         if (!m_updateProgress & m_currentAccount!=null) {
             // See if any other account has this default account
@@ -1020,15 +1074,15 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
         
     }//GEN-LAST:event_defaultAcctComboActionPerformed
     
-    private void tableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableKeyPressed
+    private void tableKeyPressed(KeyEvent evt) {//GEN-FIRST:event_tableKeyPressed
         
-        if ((evt.getKeyCode() & evt.VK_DELETE)==evt.VK_DELETE) {
+        if ((evt.getKeyCode() & KeyEvent.VK_DELETE)==KeyEvent.VK_DELETE) {
             actionDelete.actionPerformed(new ActionEvent(accountTree, 0, "Remove account"));
         }
         
     }//GEN-LAST:event_tableKeyPressed
     
-    private void purgeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_purgeMenuItemActionPerformed
+    private void purgeMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_purgeMenuItemActionPerformed
         
         purgeAccountSchema();
         
@@ -1057,10 +1111,10 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
     private void refreshAll() {
         m_accountTree = m_schemaFile.getSchema().getAccountTree();
         m_treeRoot = createTreeNodes();
-        accountTree.setModel(new javax.swing.tree.DefaultTreeModel(m_treeRoot));
+        accountTree.setModel(new DefaultTreeModel(m_treeRoot));
     }
     
-    private void closeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeMenuItemActionPerformed
+    private void closeMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_closeMenuItemActionPerformed
 
         // See if the user wants to save the file
         if (m_modified) {
@@ -1077,7 +1131,7 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
         
     }//GEN-LAST:event_closeMenuItemActionPerformed
     
-    private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
+    private void saveAsMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
 
         // Save if necessary
         if (m_currentAccount!=null) {
@@ -1087,13 +1141,13 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
         // Find the last used directory.
         File dir = CAdempiereAcctEdit.getCurrentDirectory();
         
-        javax.swing.JFileChooser fc = new javax.swing.JFileChooser();
+        JFileChooser fc = new JFileChooser();
         if (dir!=null) {
             fc.setCurrentDirectory(dir);
         }
         fc.setDialogTitle("Save file as");
         int result = fc.showSaveDialog(this);
-        if (result==fc.APPROVE_OPTION) {
+        if (result==JFileChooser.APPROVE_OPTION) {
             // Save the file
             try {
                 m_schemaFile.saveFile(fc.getSelectedFile());
@@ -1112,7 +1166,7 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
         
     }//GEN-LAST:event_saveAsMenuItemActionPerformed
     
-    private void accountTreeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_accountTreeValueChanged
+    private void accountTreeValueChanged(TreeSelectionEvent evt) {//GEN-FIRST:event_accountTreeValueChanged
 
         // Save the last selected
         if (m_currentAccount!=null) {
@@ -1132,7 +1186,7 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
         
     }//GEN-LAST:event_accountTreeValueChanged
 
-    private void acctTypeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acctTypeComboActionPerformed
+    private void acctTypeComboActionPerformed(ActionEvent evt) {//GEN-FIRST:event_acctTypeComboActionPerformed
         
         if (!m_updateProgress) {
             acctTypeChanged();
@@ -1150,7 +1204,7 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
         setModified(true);
         CAccountSchema schema = m_schemaFile.getSchema();
         if (m_currentAccount.isSummary() && schema.hasChildren(m_currentAccount.getKey())) {
-            int answer = javax.swing.JOptionPane.showConfirmDialog(acctTypeCombo, "Change type for all sub-accounts?");
+            int answer = JOptionPane.showConfirmDialog(acctTypeCombo, "Change type for all sub-accounts?");
             if (answer==JOptionPane.YES_OPTION) {
                 schema.setTypeRecursive(m_currentAccount.getKey(), (String)acctTypeCombo.getSelectedItem());
             }
@@ -1211,75 +1265,75 @@ public class CSchemaFileMainFrame extends javax.swing.JInternalFrame implements 
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel accountListBgPanel;
-    private javax.swing.JPanel accountListPanel;
-    private javax.swing.JScrollPane accountListScrollPane;
-    private javax.swing.JTable accountListTable;
-    private javax.swing.JTree accountTree;
-    private javax.swing.JPanel accountTreeBottomPanel;
-    private javax.swing.JScrollPane accountTreeScrollPane;
-    private javax.swing.JLabel acctDescLabel;
-    private javax.swing.JTextField acctDescText;
-    private javax.swing.JLabel acctNameLabel;
-    private javax.swing.JTextField acctNameText;
-    private javax.swing.JLabel acctParentLabel;
-    private javax.swing.JTextField acctParentText;
-    private javax.swing.JComboBox acctSignCombo;
-    private javax.swing.JLabel acctSignLabel;
-    private javax.swing.JComboBox acctTypeCombo;
-    private javax.swing.JLabel acctTypeLabel;
-    private javax.swing.JLabel acctValueLabel;
-    private javax.swing.JTextField acctValueText;
-    private javax.swing.JMenu actionMenu;
-    private javax.swing.JLabel balanceSheetLabel;
-    private javax.swing.JLabel balanceSheetNameLabel;
-    private javax.swing.JTextField balanceSheetNameText;
-    private javax.swing.JTextField balanceSheetText;
-    private javax.swing.JLabel cashFlowLabel;
-    private javax.swing.JLabel cashFlowNameLabel;
-    private javax.swing.JTextField cashFlowNameText;
-    private javax.swing.JTextField cashFlowText;
-    private javax.swing.JMenuItem closeMenuItem;
-    private javax.swing.JPanel defAcctBasePanel;
-    private javax.swing.JPanel defAcctPanel;
-    private javax.swing.JScrollPane defAcctScrollPane;
-    private javax.swing.JTable defAcctTable;
-    private javax.swing.JLabel defaultAccountLabel;
-    private javax.swing.JComboBox defaultAcctCombo;
-    private javax.swing.JPanel detailsPanel;
-    private javax.swing.JCheckBox docCtlCheck;
-    private javax.swing.JLabel docCtlLabel;
-    private javax.swing.JMenu fileMenu;
-    private javax.swing.JSeparator fileSeparator;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel leftSplitPanePanel;
-    private javax.swing.JMenuBar mainMenuBar;
-    private javax.swing.JPanel mainPanel;
-    private javax.swing.JSplitPane mainSplitPanePanel;
-    private javax.swing.JToolBar mainToolBar;
-    private javax.swing.JButton newAccountButton;
-    private javax.swing.JLabel pnlLabel;
-    private javax.swing.JLabel pnlNameLabel;
-    private javax.swing.JTextField pnlNameText;
-    private javax.swing.JTextField pnlText;
-    private javax.swing.JMenuItem purgeMenuItem;
-    private javax.swing.JButton removeAccountButton;
-    private javax.swing.JPanel rightSplitPanePanel;
-    private javax.swing.JMenuItem saveAsMenuItem;
-    private javax.swing.JButton saveButton;
-    private javax.swing.JMenuItem saveMenuItem;
-    private javax.swing.JCheckBox summaryAcctCheck;
-    private javax.swing.JLabel summaryAcctLabel;
-    private javax.swing.JPanel tabbedPaneMainPanel;
-    private javax.swing.JTabbedPane tabbedPanePanel;
-    private javax.swing.JLabel us1120balanceSheetLabel;
-    private javax.swing.JLabel us1120balanceSheetNameLabel;
-    private javax.swing.JTextField us1120balanceSheetNameText;
-    private javax.swing.JTextField us1120balanceSheetText;
-    private javax.swing.JLabel us1120incomeStmtLabel;
-    private javax.swing.JLabel us1120incomeStmtNameLabel;
-    private javax.swing.JTextField us1120incomeStmtNameText;
-    private javax.swing.JTextField us1120incomeStmtText;
+    private JPanel accountListBgPanel;
+    private JPanel accountListPanel;
+    private JScrollPane accountListScrollPane;
+    private JTable accountListTable;
+    private JTree accountTree;
+    private JPanel accountTreeBottomPanel;
+    private JScrollPane accountTreeScrollPane;
+    private JLabel acctDescLabel;
+    private JTextField acctDescText;
+    private JLabel acctNameLabel;
+    private JTextField acctNameText;
+    private JLabel acctParentLabel;
+    private JTextField acctParentText;
+    private JComboBox acctSignCombo;
+    private JLabel acctSignLabel;
+    private JComboBox acctTypeCombo;
+    private JLabel acctTypeLabel;
+    private JLabel acctValueLabel;
+    private JTextField acctValueText;
+    private JMenu actionMenu;
+    private JLabel balanceSheetLabel;
+    private JLabel balanceSheetNameLabel;
+    private JTextField balanceSheetNameText;
+    private JTextField balanceSheetText;
+    private JLabel cashFlowLabel;
+    private JLabel cashFlowNameLabel;
+    private JTextField cashFlowNameText;
+    private JTextField cashFlowText;
+    private JMenuItem closeMenuItem;
+    private JPanel defAcctBasePanel;
+    private JPanel defAcctPanel;
+    private JScrollPane defAcctScrollPane;
+    private JTable defAcctTable;
+    private JLabel defaultAccountLabel;
+    private JComboBox defaultAcctCombo;
+    private JPanel detailsPanel;
+    private JCheckBox docCtlCheck;
+    private JLabel docCtlLabel;
+    private JMenu fileMenu;
+    private JSeparator fileSeparator;
+    private JPanel jPanel2;
+    private JPanel leftSplitPanePanel;
+    private JMenuBar mainMenuBar;
+    private JPanel mainPanel;
+    private JSplitPane mainSplitPanePanel;
+    private JToolBar mainToolBar;
+    private JButton newAccountButton;
+    private JLabel pnlLabel;
+    private JLabel pnlNameLabel;
+    private JTextField pnlNameText;
+    private JTextField pnlText;
+    private JMenuItem purgeMenuItem;
+    private JButton removeAccountButton;
+    private JPanel rightSplitPanePanel;
+    private JMenuItem saveAsMenuItem;
+    private JButton saveButton;
+    private JMenuItem saveMenuItem;
+    private JCheckBox summaryAcctCheck;
+    private JLabel summaryAcctLabel;
+    private JPanel tabbedPaneMainPanel;
+    private JTabbedPane tabbedPanePanel;
+    private JLabel us1120balanceSheetLabel;
+    private JLabel us1120balanceSheetNameLabel;
+    private JTextField us1120balanceSheetNameText;
+    private JTextField us1120balanceSheetText;
+    private JLabel us1120incomeStmtLabel;
+    private JLabel us1120incomeStmtNameLabel;
+    private JTextField us1120incomeStmtNameText;
+    private JTextField us1120incomeStmtText;
     // End of variables declaration//GEN-END:variables
     
 }
