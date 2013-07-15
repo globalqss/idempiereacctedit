@@ -89,7 +89,7 @@ public class CAboutDialog extends JDialog {
 
         row2Label.setFont(new java.awt.Font("Tahoma", 1, 11));
         row2Label.setHorizontalAlignment(SwingConstants.CENTER);
-        row2Label.setText("The Adempiere Account Editor");
+        row2Label.setText("The iDempiere Account Editor");
         moreTextPanel.add(row2Label);
 
         row3Label.setHorizontalAlignment(SwingConstants.CENTER);

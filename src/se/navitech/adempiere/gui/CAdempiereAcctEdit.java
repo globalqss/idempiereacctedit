@@ -40,7 +40,7 @@ public class CAdempiereAcctEdit extends JFrame {
 
 	private static File    m_currentDirectory;
     
-    private static final String PROPSFILENAME="compiereAcctEdit.properties";
+    private static final String PROPSFILENAME="iDempiereAcctEdit.properties";
     
     private static Properties m_globalProps;
     
@@ -122,8 +122,8 @@ public class CAdempiereAcctEdit extends JFrame {
         aboutMenuItem = new JMenuItem();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Adempiere Account Editor");
-        setName("compiereAcctEditMain");
+        setTitle("iDempiere Account Editor");
+        setName("iDempiereAcctEditMain");
         desktopPane.setBackground(new java.awt.Color(0, 0, 153));
         desktopPane.setOpaque(false);
         desktopPane.setPreferredSize(new java.awt.Dimension(450, 300));

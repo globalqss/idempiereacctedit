@@ -81,26 +81,26 @@ public class CAccountType {
     }
 
     /**
-     * Holds value of property compiereKey.
+     * Holds value of property iDempiereKey.
      */
-    private String compiereKey;
+    private String iDempiereKey;
 
     /**
-     * Getter for property compiereKey.
-     * @return Value of property compiereKey.
+     * Getter for property iDempiereKey.
+     * @return Value of property iDempiereKey.
      */
-    public String getCompiereKey() {
+    public String getiDempiereKey() {
 
-        return this.compiereKey;
+        return this.iDempiereKey;
     }
 
     /**
-     * Setter for property compiereKey.
-     * @param compiereKey New value of property compiereKey.
+     * Setter for property iDempiereKey.
+     * @param iDempiereKey New value of property iDempiereKey.
      */
-    public void setCompiereKey(String compiereKey) {
+    public void setiDempiereKey(String iDempiereKey) {
 
-        this.compiereKey = compiereKey;
+        this.iDempiereKey = iDempiereKey;
     }
     
 }
