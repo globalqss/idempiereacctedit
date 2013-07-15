@@ -11,9 +11,13 @@
 package se.navitech.adempiere.gui;
 
 
-import java.util.*;
-import javax.swing.*;
-import javax.swing.table.*;
+import java.util.Iterator;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.Vector;
+
+import javax.swing.table.AbstractTableModel;
+
 import se.navitech.adempiere.CAccountElement;
 import se.navitech.adempiere.CAccountSchema;
 
@@ -22,8 +26,12 @@ import se.navitech.adempiere.CAccountSchema;
  * @author Daniel Norin
  */
 public class CAccountListTableModel extends AbstractTableModel {
-    
-    private CAccountSchema  m_accountSchema;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3904325970269112324L;
+
+	private CAccountSchema  m_accountSchema;
     private SortedMap<String,CAccountElement>   m_elements;
     private Vector<String>                      m_keys;
     

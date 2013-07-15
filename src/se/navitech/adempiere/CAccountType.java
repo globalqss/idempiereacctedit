@@ -10,7 +10,7 @@
 
 package se.navitech.adempiere;
 
-import java.util.*;
+import java.util.Vector;
 
 /**
  *
@@ -18,7 +18,7 @@ import java.util.*;
  */
 public class CAccountType {
 
-    public static Vector<String> m_accountTypes = new Vector();
+    public static Vector<String> m_accountTypes = new Vector<String>();
     
     static {
         m_accountTypes.add("");

@@ -10,7 +10,12 @@
 
 package se.navitech.adempiere;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Vector;
 
 /**
  *
@@ -28,9 +33,9 @@ public class CAccountSchema {
     
     /** Creates a new instance of CAccountSchema */
     public CAccountSchema(SortedMap<String,CDefaultAccount> defaultAccounts) {
-        m_elements = new TreeMap();
-        m_root = new TreeSet();
-        m_tree = new TreeMap();
+        m_elements = new TreeMap<String, CAccountElement>();
+        m_root = new TreeSet<String>();
+        m_tree = new TreeMap<String, SortedSet<String>>();
         m_defAcctAssignments = new TreeMap<String,CAccountElement>();
         m_defAcctAssignmentsReverse = new TreeMap<CAccountElement,String>();
         m_defaultAccounts = defaultAccounts;
@@ -54,7 +59,7 @@ public class CAccountSchema {
             // Get sorted map for parent
             kids = m_tree.get(acct.getParentKey());
             if (kids==null) {
-                kids = new TreeSet();
+                kids = new TreeSet<String>();
             }
             kids.add(acct.getKey());
             m_tree.put(acct.getParentKey(), kids);

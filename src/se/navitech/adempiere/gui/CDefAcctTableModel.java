@@ -9,9 +9,11 @@
 
 package se.navitech.adempiere.gui;
 
-import java.util.*;
-import javax.swing.*;
-import javax.swing.table.*;
+import java.util.SortedMap;
+import java.util.Vector;
+
+import javax.swing.table.AbstractTableModel;
+
 import se.navitech.adempiere.CAccountElement;
 import se.navitech.adempiere.CAccountSchema;
 import se.navitech.adempiere.CDefaultAccount;
@@ -21,12 +23,15 @@ import se.navitech.adempiere.CDefaultAccount;
  * @author Daniel Norin
  */
 public class CDefAcctTableModel extends AbstractTableModel {
-    
-    private CAccountSchema  m_accountSchema;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7131918406990611272L;
+
+	private CAccountSchema  m_accountSchema;
     private SortedMap<String, CDefaultAccount>          m_defAccts;
     private SortedMap<String,CAccountElement>  m_defAcctAssign;
     private Vector<CDefaultAccount>                     m_elements;
-    private Vector<CDefaultAccount>                     m_keys;
 
     public String[] cols = {"Default account", "Name", "Account id", "Description"};
     

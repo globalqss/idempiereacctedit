@@ -14,7 +14,7 @@ package se.navitech.adempiere;
  *
  * @author Daniel Norin
  */
-public class CDefaultAccount implements Comparable {
+public class CDefaultAccount implements Comparable<Object> {
     
     /** Creates a new instance of CDefaultAccount */
     public CDefaultAccount() {

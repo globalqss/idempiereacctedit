@@ -6,15 +6,29 @@
 
 package se.navitech.adempiere.gui;
 
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 /**
  *
  * @author  Daniel Norin
  */
-public class CNewAccountDialog extends javax.swing.JDialog {
+public class CNewAccountDialog extends JDialog {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6103815627780167759L;
 
-    private boolean m_isOk = false;
+	private boolean m_isOk = false;
     
     /** Creates new form CNewAccountDialog */
     public CNewAccountDialog(java.awt.Frame parent, String parentAccountId) {
@@ -53,17 +67,17 @@ public class CNewAccountDialog extends javax.swing.JDialog {
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
-        accountIdLabel = new javax.swing.JLabel();
-        accountIdText = new javax.swing.JTextField();
-        accountName = new javax.swing.JLabel();
-        accountText = new javax.swing.JTextField();
-        parentAcctLabel = new javax.swing.JLabel();
-        parentAcctText = new javax.swing.JTextField();
-        createButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
-        summaryCheck = new javax.swing.JCheckBox();
+        accountIdLabel = new JLabel();
+        accountIdText = new JTextField();
+        accountName = new JLabel();
+        accountText = new JTextField();
+        parentAcctLabel = new JLabel();
+        parentAcctText = new JTextField();
+        createButton = new JButton();
+        cancelButton = new JButton();
+        summaryCheck = new JCheckBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create new account");
         accountIdLabel.setText("Account id");
 
@@ -74,21 +88,21 @@ public class CNewAccountDialog extends javax.swing.JDialog {
         parentAcctText.setEditable(false);
 
         createButton.setText("Create");
-        createButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        createButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 createButtonActionPerformed(evt);
             }
         });
 
         cancelButton.setText("Cancel");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }
         });
 
         summaryCheck.setText("Summary account");
-        summaryCheck.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        summaryCheck.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         summaryCheck.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
@@ -142,14 +156,14 @@ public class CNewAccountDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+    private void cancelButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         
         this.setVisible(false);
         this.dispose();
         
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
+    private void createButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
 
         // Make sure there is something filled in
         if (getAccountId().length()==0) {
@@ -175,15 +189,15 @@ public class CNewAccountDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_createButtonActionPerformed
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel accountIdLabel;
-    private javax.swing.JTextField accountIdText;
-    private javax.swing.JLabel accountName;
-    private javax.swing.JTextField accountText;
-    private javax.swing.JButton cancelButton;
-    private javax.swing.JButton createButton;
-    private javax.swing.JLabel parentAcctLabel;
-    private javax.swing.JTextField parentAcctText;
-    private javax.swing.JCheckBox summaryCheck;
+    private JLabel accountIdLabel;
+    private JTextField accountIdText;
+    private JLabel accountName;
+    private JTextField accountText;
+    private JButton cancelButton;
+    private JButton createButton;
+    private JLabel parentAcctLabel;
+    private JTextField parentAcctText;
+    private JCheckBox summaryCheck;
     // End of variables declaration//GEN-END:variables
     
 }

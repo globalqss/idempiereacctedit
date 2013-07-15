@@ -7,9 +7,18 @@
 
 package se.navitech.adempiere;
 
-import java.util.*;
-import java.util.regex.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Iterator;
+import java.util.SortedMap;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Represents an account schema file as accepted by Compiere.
@@ -65,7 +74,7 @@ public class CAccountSchemaFile {
      */
     public void readFile(File file) throws Exception {
         m_file = file;
-        m_lines = new Vector();
+        m_lines = new Vector<StringBuffer[]>();
         // Read the file into lines
         readFile();
         // Convert the lines into account elements
@@ -221,7 +230,6 @@ public class CAccountSchemaFile {
         String line;
         String firstLine = null;
         boolean result = false;
-        Pattern pattern = null;
         while((line = in.readLine())!=null) {
             if (firstLine == null) {
                 // We are processing the first header line.

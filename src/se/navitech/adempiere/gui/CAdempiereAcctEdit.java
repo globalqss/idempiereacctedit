@@ -6,17 +6,39 @@
 
 package se.navitech.adempiere.gui;
 
-import java.io.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.TreeMap;
+
+import javax.swing.JDesktopPane;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
+import javax.swing.UIManager;
+import javax.swing.WindowConstants;
+
 import se.navitech.adempiere.CDefaultAccount;
 
 /**
  *
  * @author  Daniel Norin
  */
-public class CAdempiereAcctEdit extends javax.swing.JFrame {
+public class CAdempiereAcctEdit extends JFrame {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -842883693347171307L;
 
-    private static File    m_currentDirectory;
+	private static File    m_currentDirectory;
     
     private static final String PROPSFILENAME="compiereAcctEdit.properties";
     
@@ -72,7 +94,7 @@ public class CAdempiereAcctEdit extends javax.swing.JFrame {
             // Put the properties in the tree map
             m_defaultAccounts = new TreeMap<String, CDefaultAccount>();
             String key;
-            for (Iterator it = props.keySet().iterator(); it.hasNext(); ) {
+            for (Iterator<?> it = props.keySet().iterator(); it.hasNext(); ) {
                 key = (String)it.next();
                 m_defaultAccounts.put(key, new CDefaultAccount(key, props.getProperty(key)));
             }
@@ -89,17 +111,17 @@ public class CAdempiereAcctEdit extends javax.swing.JFrame {
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
-        desktopPane = new javax.swing.JDesktopPane();
-        menuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        newFileMenuItem = new javax.swing.JMenuItem();
-        openMenuItem = new javax.swing.JMenuItem();
-        fileMenuSeparator = new javax.swing.JSeparator();
-        exitMenuItem = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        aboutMenuItem = new javax.swing.JMenuItem();
+        desktopPane = new JDesktopPane();
+        menuBar = new JMenuBar();
+        fileMenu = new JMenu();
+        newFileMenuItem = new JMenuItem();
+        openMenuItem = new JMenuItem();
+        fileMenuSeparator = new JSeparator();
+        exitMenuItem = new JMenuItem();
+        helpMenu = new JMenu();
+        aboutMenuItem = new JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Adempiere Account Editor");
         setName("compiereAcctEditMain");
         desktopPane.setBackground(new java.awt.Color(0, 0, 153));
@@ -111,8 +133,8 @@ public class CAdempiereAcctEdit extends javax.swing.JFrame {
         fileMenu.setText("File");
         newFileMenuItem.setMnemonic('n');
         newFileMenuItem.setText("New schema file");
-        newFileMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        newFileMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 newFileMenuItemActionPerformed(evt);
             }
         });
@@ -122,8 +144,8 @@ public class CAdempiereAcctEdit extends javax.swing.JFrame {
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("Open Schema File");
         openMenuItem.setToolTipText("Open Schema File");
-        openMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        openMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 openMenuItemActionPerformed(evt);
             }
         });
@@ -134,8 +156,8 @@ public class CAdempiereAcctEdit extends javax.swing.JFrame {
 
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        exitMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 exitMenuItemActionPerformed(evt);
             }
         });
@@ -148,8 +170,8 @@ public class CAdempiereAcctEdit extends javax.swing.JFrame {
         helpMenu.setText("Help");
         aboutMenuItem.setMnemonic('a');
         aboutMenuItem.setText("About");
-        aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        aboutMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 aboutMenuItemActionPerformed(evt);
             }
         });
@@ -164,16 +186,16 @@ public class CAdempiereAcctEdit extends javax.swing.JFrame {
         setBounds((screenSize.width-923)/2, (screenSize.height-725)/2, 923, 725);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
+    private void aboutMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         CAboutDialog aboutDialog = new CAboutDialog(this, true);
         aboutDialog.setVisible(true);
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
-    private void newFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newFileMenuItemActionPerformed
+    private void newFileMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_newFileMenuItemActionPerformed
         newSchemaFile();
     }//GEN-LAST:event_newFileMenuItemActionPerformed
 
-    private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+    private void openMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         openSchemaFile();
     }//GEN-LAST:event_openMenuItemActionPerformed
     
@@ -200,13 +222,13 @@ public class CAdempiereAcctEdit extends javax.swing.JFrame {
      */
     private void openSchemaFile() {
         
-        javax.swing.JFileChooser fc = new javax.swing.JFileChooser();
+        JFileChooser fc = new JFileChooser();
         if (m_currentDirectory!=null) {
             fc.setCurrentDirectory(m_currentDirectory);
         }
         fc.setDialogTitle("Choose Schema File to open");
         int result = fc.showOpenDialog(this);
-        if (result==fc.APPROVE_OPTION) {
+        if (result==JFileChooser.APPROVE_OPTION) {
             // Set the current directory
             m_currentDirectory = fc.getCurrentDirectory();
             // Open the file
@@ -222,7 +244,7 @@ public class CAdempiereAcctEdit extends javax.swing.JFrame {
         
     }
     
-    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+    private void exitMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         
         // Save properties file
         try {
@@ -242,8 +264,8 @@ public class CAdempiereAcctEdit extends javax.swing.JFrame {
     public static void main(String args[]) {
         
         try {
-            javax.swing.UIManager.setLookAndFeel(
-                    javax.swing.UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
         }
         
@@ -255,15 +277,15 @@ public class CAdempiereAcctEdit extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JDesktopPane desktopPane;
-    private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JMenu fileMenu;
-    private javax.swing.JSeparator fileMenuSeparator;
-    private javax.swing.JMenu helpMenu;
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem newFileMenuItem;
-    private javax.swing.JMenuItem openMenuItem;
+    private JMenuItem aboutMenuItem;
+    private JDesktopPane desktopPane;
+    private JMenuItem exitMenuItem;
+    private JMenu fileMenu;
+    private JSeparator fileMenuSeparator;
+    private JMenu helpMenu;
+    private JMenuBar menuBar;
+    private JMenuItem newFileMenuItem;
+    private JMenuItem openMenuItem;
     // End of variables declaration//GEN-END:variables
     
 }
