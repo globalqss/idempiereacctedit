@@ -21,7 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Represents an account schema file as accepted by Compiere.
+ * Represents an account schema file as accepted by iDempiere.
  *
  * The file format should be comma separated with or without quotation marks " "
  * to enclose the values.

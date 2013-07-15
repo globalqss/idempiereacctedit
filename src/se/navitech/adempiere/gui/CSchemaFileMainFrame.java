@@ -222,7 +222,7 @@ public class CSchemaFileMainFrame extends JInternalFrame implements KeyListener,
             try {
                 m_schemaFile.readFile(schemaFile);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, schemaFile.getAbsolutePath() + " is not a valid compiere account file.\n" +
+                JOptionPane.showMessageDialog(null, schemaFile.getAbsolutePath() + " is not a valid iDempiere account file.\n" +
                         e.getMessage());
                 return;
             }
