@@ -501,7 +501,10 @@ public class CAccountElement implements Comparable<Object> {
     }
 
     public int compareTo(Object o) {
-        return(this.getKey().compareTo(o.toString()));
+    	if (o == null || !o.getClass().isAssignableFrom(CAccountElement.class)){
+    	    return -1;
+    	}
+    	return(this.getKey().compareTo(((CAccountElement)o).getKey()));
     }
     
 }
