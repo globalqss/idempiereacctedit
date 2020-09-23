@@ -300,7 +300,9 @@ public class CAccountSchemaFile {
      * @param   line    The line to be checked.
      */
     private boolean checkFirstLine(String line) throws Exception {
-        // Split the line
+    	// remove BOM if present
+    	line = removeBOM(line);
+         // Split the line
         Pattern pattern = Pattern.compile("\\]{0,1},\\[{0,1}", Pattern.CASE_INSENSITIVE);
         String[] colNames = pattern.split(line);
         if (colNames.length>=MIN_NCOLS) {
@@ -343,6 +345,19 @@ public class CAccountSchemaFile {
         }
         
         return(colNames.length>=MIN_NCOLS);
+    }
+    
+    /**
+     * Removes Byte order Mark if present (as added by Excel)
+     * @param string
+     */
+    
+    private static String removeBOM(String string) {
+    	final String UTF8_BOM = "\uFEFF";
+        if (string.startsWith(UTF8_BOM)) {
+            string = string.substring(1);
+        }
+        return string;
     }
     
 }

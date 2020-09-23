@@ -237,7 +237,8 @@ public class CSchemaFileMainFrame extends JInternalFrame implements KeyListener,
         m_defAcctTableModel = new CDefAcctTableModel(m_schemaFile.getSchema());
         initComponents();
         // Insert empty element in default account combobox
-        ((DefaultComboBoxModel)defaultAcctCombo.getModel()).insertElementAt(new CDefaultAccount("", ""), 0);
+        if(defaultAcctCombo.getModel() instanceof DefaultComboBoxModel<?>)
+        	((DefaultComboBoxModel<CDefaultAccount>)defaultAcctCombo.getModel()).insertElementAt(new CDefaultAccount("", ""), 0);
         defaultAcctCombo.setSelectedIndex(0);
         
         setTitle(schemaFile!=null ? schemaFile.getAbsolutePath() : "New schema");
@@ -565,7 +566,7 @@ public class CSchemaFileMainFrame extends JInternalFrame implements KeyListener,
         summaryAcctLabel = new JLabel();
         summaryAcctCheck = new JCheckBox();
         defaultAccountLabel = new JLabel();
-        defaultAcctCombo = new JComboBox(m_defaultAccountVector);
+        defaultAcctCombo = new JComboBox<CDefaultAccount>(m_defaultAccountVector);
         acctParentLabel = new JLabel();
         balanceSheetLabel = new JLabel();
         balanceSheetText = new JTextField();
@@ -597,9 +598,9 @@ public class CSchemaFileMainFrame extends JInternalFrame implements KeyListener,
         acctDescLabel = new JLabel();
         acctDescText = new JTextField();
         acctTypeLabel = new JLabel();
-        acctTypeCombo = new JComboBox(CAccountType.m_accountTypes);
+        acctTypeCombo = new JComboBox<String>(CAccountType.m_accountTypes);
         acctSignLabel = new JLabel();
-        acctSignCombo = new JComboBox();
+        acctSignCombo = new JComboBox<>();
         accountListPanel = new JPanel();
         accountListBgPanel = new JPanel();
         accountListScrollPane = new JScrollPane();
@@ -888,7 +889,7 @@ public class CSchemaFileMainFrame extends JInternalFrame implements KeyListener,
 
         acctSignLabel.setText("Account sign");
 
-        acctSignCombo.setModel(new DefaultComboBoxModel(new String[] { "", "Natural", "Debit", "Credit" }));
+        acctSignCombo.setModel(new DefaultComboBoxModel<String>(new String[] { "", "Natural", "Debit", "Credit" }));
 
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -1278,9 +1279,9 @@ public class CSchemaFileMainFrame extends JInternalFrame implements KeyListener,
     private JTextField acctNameText;
     private JLabel acctParentLabel;
     private JTextField acctParentText;
-    private JComboBox acctSignCombo;
+    private JComboBox<String> acctSignCombo;
     private JLabel acctSignLabel;
-    private JComboBox acctTypeCombo;
+    private JComboBox<String> acctTypeCombo;
     private JLabel acctTypeLabel;
     private JLabel acctValueLabel;
     private JTextField acctValueText;
@@ -1299,7 +1300,7 @@ public class CSchemaFileMainFrame extends JInternalFrame implements KeyListener,
     private JScrollPane defAcctScrollPane;
     private JTable defAcctTable;
     private JLabel defaultAccountLabel;
-    private JComboBox defaultAcctCombo;
+    private JComboBox<CDefaultAccount> defaultAcctCombo;
     private JPanel detailsPanel;
     private JCheckBox docCtlCheck;
     private JLabel docCtlLabel;
