@@ -7,14 +7,12 @@
         <listEntry value="1"/>
     </listAttribute>
     <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
-    <mapAttribute key="org.eclipse.debug.core.environmentVariables">
-        <mapEntry key="J2D_UISCALE" value="1"/>
-    </mapAttribute>
     <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
         <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
         <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
     </listAttribute>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="se.navitech.adempiere.gui.CAdempiereAcctEdit"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="AcctEditor"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="AcctEditor"/>
 </launchConfiguration>

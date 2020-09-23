@@ -199,8 +199,8 @@ public class CSchemaFileMainFrame extends JInternalFrame implements KeyListener,
     // Action definitions
     
     private ActionDelete actionDelete = new ActionDelete("Remove Account", null, "Removes an account from the schema", KeyEvent.VK_DELETE);
-    private ActionAdd    actionAdd = new ActionAdd("Add account", null, "Adds account to the schema", new Integer(KeyEvent.CTRL_DOWN_MASK + KeyEvent.VK_N));
-    private ActionSave actionSave = new ActionSave("Save Schema File", null, "Saves schema file", new Integer(KeyEvent.CTRL_DOWN_MASK + KeyEvent.VK_S));
+    private ActionAdd    actionAdd = new ActionAdd("Add account", null, "Adds account to the schema", Integer.valueOf(KeyEvent.CTRL_DOWN_MASK + KeyEvent.VK_N));
+    private ActionSave actionSave = new ActionSave("Save Schema File", null, "Saves schema file", Integer.valueOf(KeyEvent.CTRL_DOWN_MASK + KeyEvent.VK_S));
     
     /**
      * Creates new form CSchemaFileMainFrame
